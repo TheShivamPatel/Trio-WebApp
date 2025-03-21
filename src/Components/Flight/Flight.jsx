@@ -1,57 +1,55 @@
-import React, { useState } from "react";
-import FlightBookingInterface from "./FlightBookingInterface";
-import FlightResults from "./FlightResults";
-import HotelCard from "../Hotel/HotelCard"; 
+import React, {useState} from "react";
+import AboveSelector from "./AboveSelector";
+import From from "./From";
+import To from "./To";
+import Departure from "./Departure";
+import Return from "./Return";
+import BelowSelector from "./BelowSelector";
 import EEE from "./EEE";
+import SearchBtn from "../Header/SearchBtn";
+import FlightCards from "./FlightsCard";
 
 function Flight() {
-  const [searchParams, setSearchParams] = useState(null);
-  const [showResults, setShowResults] = useState(false);
-  const [activeNav, setActiveNav] = useState('Flights');
-  
-  const handleSearch = (params) => {
-    setSearchParams(params);
-    setShowResults(true);
-    setActiveNav(params.navType); 
-    
-    // Scroll to results
-    window.scrollTo({
-      top: 400,
-      behavior: "smooth",
-    });
-  };
-  
-  const handleNavChange = (navType) => {
-    setActiveNav(navType);
-    setShowResults(false);
-  };
-  
+  const [tripType, setTripType] = useState("oneway");
+  const [selectedFrom, setSelectedFrom] = useState(null);
+
+
   return (
-    <div className="h-auto w-full">
-      {/* Top section with background image */}
-      <div className="w-full bg-[url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center bg-no-repeat h-150">
-        {/* Booking Interface - Centered with more top padding */}
-        <div className="flex justify-center items-center h-full pt-25">
-          <FlightBookingInterface onSearch={handleSearch} onNavChange={handleNavChange} />
+    <div className="h-auto w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
+      {/* Flight Search Form */}
+      <div className="bg-white h-auto justify-start py-6 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 w-full  md:mt-[-20em] lg:mt-[-22em] xl:mt-[-25em] 2xl:mt-[-27em] z-[-4] pt-15 rounded-3xl shadow-lg">
+      <AboveSelector tripType={tripType} setTripType={setTripType} />
+        <div className="py-4 flex flex-row justify-center md:flex-row flex-wrap ">
+          <div className="flex min-w-[10%] ">
+          <From setSelectedFrom={setSelectedFrom} />
+          </div>
+          <div className="flex min-w-[15%]">
+          <To selectedFrom={selectedFrom} />
+          </div>
+          <div className="flex min-w-[15%]">
+            <Departure />
+          </div>
+          <div className="flex min-w-[15%]">
+            <Return />
+          </div>
+        </div>
+        <div className="pb-4 flex justify-around">
+          <BelowSelector />
+          <div></div>
+        </div>
+        <div className="flex h-1 justify-center">
+          <SearchBtn />
         </div>
       </div>
-      
-      {/* Content section with white background */}
-      <div className="bg-white w-full">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* EEE Section */}
-          <div className="mb-10">
-            <EEE />
-          </div>
-          
-          {/* Results Section */}
-          {showResults && searchParams && (
-            <div className="mb-10">
-              {activeNav === 'Flights' && <FlightResults searchParams={searchParams} />}
-              {activeNav === 'Hotels' && <HotelCard searchParams={searchParams} />}
-            </div>
-          )}
-        </div>
+
+      {/* EEE Section */}
+      <div className="mt-10 mb-10 md:mb-15 lg:mb-20 xl:mb-25 2xl:mb-30">
+        <EEE />
+      </div>
+
+      {/* Flight Cards Section */}
+      <div className="mt-5 mb-10 md:mb-15 lg:mb-20 xl:mb-25 2xl:mb-30">
+      <FlightCards tripType={tripType} />
       </div>
     </div>
   );
