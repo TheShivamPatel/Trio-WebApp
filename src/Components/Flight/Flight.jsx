@@ -34,23 +34,26 @@ function Flight() {
       {/* Flight Search Form */}
       <div className="bg-white h-auto justify-start py-6 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 w-full md:mt-[-20em] lg:mt-[-22em] xl:mt-[-25em] 2xl:mt-[-27em] z-[-4] pt-15 rounded-3xl shadow-lg">
         <AboveSelector tripType={tripType} setTripType={setTripType} />
-        <div className="py-4 flex flex-row justify-center md:flex-row flex-wrap">
-          <div className="flex min-w-[10%]">
+        
+        {/* Only changing this section to make it stack vertically on small screens */}
+        <div className="py-4 flex flex-col xs:flex-col sm:flex-row justify-center items-center flex-wrap gap-4">
+          <div className="w-full xs:w-full sm:w-auto sm:flex-1 mb-4 sm:mb-0">
             <From setSelectedFrom={setSelectedFrom} />
           </div>
-          <div className="flex min-w-[15%]">
+          <div className="w-full xs:w-full sm:w-auto sm:flex-1 mb-4 sm:mb-0">
             <To 
               selectedFrom={selectedFrom} 
               setSelectedTo={setSelectedTo}
             />
           </div>
-          <div className="flex min-w-[15%]">
+          <div className="w-full xs:w-full sm:w-auto sm:flex-1 mb-4 sm:mb-0">
             <Departure setDepartureDate={setDepartureDate} />
           </div>
-          <div className="flex min-w-[15%]">
+          <div className="w-full xs:w-full sm:w-auto sm:flex-1">
             <Return setReturnDate={setReturnDate} />
           </div>
         </div>
+        
         <div className="pb-4 flex justify-around">
           <BelowSelector />
           <div></div>

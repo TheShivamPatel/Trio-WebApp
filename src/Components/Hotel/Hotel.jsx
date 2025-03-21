@@ -9,7 +9,6 @@ import HotelCard from "./HotelCard";
 import AboveSelector from "./AboveSelecote";
 
 function Hotel() {
-
   // Create a ref for the HotelCard section
   const hotelCardsRef = useRef(null);
 
@@ -23,22 +22,26 @@ function Hotel() {
 
   return (
     <div className="h-auto w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
-      {/* Hotel Search Form */}
-      <div className="bg-white h-auto py-6 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 w-full mt-[-24.5em] md:mt-[-20em] lg:mt-[-22em] xl:mt-[-25em] 2xl:mt-[-27em] z-[-4] pt-15 rounded-3xl shadow-lg">
+      {/* Hotel Search Form - Adjusted spacing for Section2 */}
+      <div className="bg-white h-auto py-6 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 w-full 
+                     mt-[-8em] xs:mt-[-12em] sm:mt-[-16em] md:mt-[-20em] lg:mt-[-22em] xl:mt-[-25em] 2xl:mt-[-27em] 
+                     z-10 pt-15 rounded-3xl shadow-lg">
         <div className="font-semibold">
           <AboveSelector />
         </div>
-        <div className="py-4 flex flex-col sm:flex-row flex-wrap gap-4">
-          <div className="flex-1 min-w-[200px]">
+        
+        {/* Only changing this section to make it stack better on small screens with proper spacing */}
+        <div className="py-4 flex flex-col xs:flex-col sm:flex-row justify-center items-center flex-wrap gap-4">
+          <div className="w-full xs:w-full sm:w-auto sm:flex-1 mb-4 sm:mb-0">
             <Location />
           </div>
-          <div className="flex-1 min-w-[200px]">
+          <div className="w-full xs:w-full sm:w-auto sm:flex-1 mb-4 sm:mb-0">
             <CheckIn />
           </div>
-          <div className="flex-1 min-w-[200px]">
+          <div className="w-full xs:w-full sm:w-auto sm:flex-1 mb-4 sm:mb-0">
             <CheckOut />
           </div>
-          <div className="flex-1 min-w-[200px]">
+          <div className="w-full xs:w-full sm:w-auto sm:flex-1">
             <PricePerNight />
           </div>
         </div>
@@ -48,23 +51,22 @@ function Hotel() {
         </div>
       </div>
 
-      {/* EEE Section */}
-      <div className="mt-10 mb-10 sm:mb-15 md:mb-20 lg:mb-25 xl:mb-30 2xl:mb-35">
-        <EEE />
-      </div>
+      {/* EEE Section - Adjusted top padding to prevent overlap with Section2 */}
+      <div className="mt-16 xs:mt-20 sm:mt-24 md:mt-28 lg:mt-32 xl:mt-36 2xl:mt-40">
+        <div className="mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+          <EEE />
+        </div>
 
-      {/* Hotel Cards Section - Added ref here */}
-      <div 
-        ref={hotelCardsRef} 
-        className="mt-5 mb-10 sm:mb-15 md:mb-20 lg:mb-25 xl:mb-30 2xl:mb-35"
-      >
-        <HotelCard />
+        {/* Hotel Cards Section */}
+        <div 
+          ref={hotelCardsRef} 
+          className="mb-8 sm:mb-10 md:mb-12 lg:mb-16"
+        >
+          <HotelCard />
+        </div>
       </div>
     </div>
   );
 }
 
 export default Hotel;
-
-
-
