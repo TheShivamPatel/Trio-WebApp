@@ -13,11 +13,24 @@ const airports = {
   ],
 };
 
-const To = () => {
+const To = ({ selectedFrom }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedAirport, setSelectedAirport] = useState(airports.recent[0]);
   const dropdownRef = useRef(null);
+
+  // Update selectedAirport if it's the same as selectedFrom
+  useEffect(() => {
+    if (selectedFrom && selectedAirport.code === selectedFrom.code) {
+      // Find the first airport that isn't the selectedFrom
+      const allAirports = [...airports.recent, ...airports.popular];
+      const differentAirport = allAirports.find(airport => airport.code !== selectedFrom.code);
+      
+      if (differentAirport) {
+        setSelectedAirport(differentAirport);
+      }
+    }
+  }, [selectedFrom, selectedAirport]);
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -33,9 +46,12 @@ const To = () => {
   }, []);
 
   const filteredAirports = (category) =>
-    airports[category].filter((airport) =>
-      airport.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    airports[category]
+      .filter(airport => 
+        // Filter out the selectedFrom airport and include only airports matching the search query
+        (!selectedFrom || airport.code !== selectedFrom.code) && 
+        airport.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
 
   return (
     <div className="relative w-full xs:w-48 sm:w-48 md:w-48 lg:w-56 xl:w-64 2xl:w-80" ref={dropdownRef}>

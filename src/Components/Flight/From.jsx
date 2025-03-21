@@ -4,20 +4,31 @@ import { IoIosSearch } from "react-icons/io";
 
 const airports = {
   recent: [
-    { name: "Mumbai, India", code: "IDR", details: "Chhatrapati Shivaji International Airport" },
+    { name: "Mumbai, India", code: "BOM", details: "Chhatrapati Shivaji International Airport" },
   ],
   popular: [
-    { name: "Indore, India", code: "BOM", details: "Devi Ahilyabai Holkar International Airport" },
+    { name: "Indore, India", code: "IDR", details: "Devi Ahilyabai Holkar International Airport" },
     { name: "New Delhi, India", code: "DEL", details: "Indira Gandhi International Airport" },
     { name: "Bangkok, Thailand", code: "BKK", details: "Bangkok" },
   ],
 };
 
-const From = () => {
+const From = ({ setSelectedFrom }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedAirport, setSelectedAirport] = useState(airports.recent[0]);
   const dropdownRef = useRef(null);
+
+  // Initialize selectedFrom with the default airport on component mount
+  useEffect(() => {
+    setSelectedFrom(selectedAirport);
+  }, []);
+
+  const handleSelect = (airport) => {
+    setSelectedAirport(airport);
+    setSelectedFrom(airport); // Send selected airport to Flight.js
+    setIsOpen(false);
+  };
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -72,10 +83,7 @@ const From = () => {
                 <div
                   key={airport.code}
                   className="flex justify-between p-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => {
-                    setSelectedAirport(airport);
-                    setIsOpen(false);
-                  }}
+                  onClick={() => handleSelect(airport)}
                 >
                   <div className="flex items-center gap-2">
                     <FaPlane className="text-gray-400 text-sm" />
@@ -98,10 +106,7 @@ const From = () => {
                 <div
                   key={airport.code}
                   className="flex justify-between p-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => {
-                    setSelectedAirport(airport);
-                    setIsOpen(false);
-                  }}
+                  onClick={() => handleSelect(airport)}
                 >
                   <div className="flex items-center gap-2">
                     <FaPlane className="text-gray-400 text-sm" />
