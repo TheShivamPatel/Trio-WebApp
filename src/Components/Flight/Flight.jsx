@@ -31,11 +31,13 @@ function Flight() {
 
   return (
     <div className="h-auto w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
-      {/* Flight Search Form */}
-      <div className="bg-white h-auto justify-start py-6 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 w-full md:mt-[-20em] lg:mt-[-22em] xl:mt-[-25em] 2xl:mt-[-27em] z-[-4] pt-15 rounded-3xl shadow-lg">
+      {/* Flight Search Form - Adjusted spacing for smaller screens */}
+      <div className="bg-white h-auto justify-start py-6 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 w-full 
+                     mt-[-8em] xs:mt-[-12em] sm:mt-[-16em] md:mt-[-20em] lg:mt-[-22em] xl:mt-[-25em] 2xl:mt-[-27em] 
+                     z-10 pt-15 rounded-3xl shadow-lg">
         <AboveSelector tripType={tripType} setTripType={setTripType} />
         
-        {/* Only changing this section to make it stack vertically on small screens */}
+        {/* Vertical stacking on small screens */}
         <div className="py-4 flex flex-col xs:flex-col sm:flex-row justify-center items-center flex-wrap gap-4">
           <div className="w-full xs:w-full sm:w-auto sm:flex-1 mb-4 sm:mb-0">
             <From setSelectedFrom={setSelectedFrom} />
@@ -63,24 +65,27 @@ function Flight() {
         </div>
       </div>
 
-      {/* EEE Section */}
-      <div className="mt-10 mb-10 md:mb-15 lg:mb-20 xl:mb-25 2xl:mb-30">
-        <EEE />
-      </div>
+      {/* Adjusted spacing between sections */}
+      <div className="mt-12 xs:mt-16 sm:mt-20 md:mt-24 lg:mt-28 xl:mt-32 2xl:mt-36">
+        {/* EEE Section */}
+        <div className="mb-6 sm:mb-8 md:mb-10 lg:mb-12 xl:mb-16">
+          <EEE />
+        </div>
 
-      {/* Flight Cards Section - Added ref here */}
-      <div 
-        ref={flightCardsRef} 
-        className="mt-5 mb-10 md:mb-15 lg:mb-20 xl:mb-25 2xl:mb-30"
-      >
-        <FlightCards 
-          tripType={tripType} 
-          selectedFrom={selectedFrom}
-          selectedTo={selectedTo}
-          departureDate={departureDate}
-          returnDate={returnDate}
-          hasSearched={hasSearched}
-        />
+        {/* Flight Cards Section */}
+        <div 
+          ref={flightCardsRef} 
+          className="mb-6 sm:mb-8 md:mb-10 lg:mb-12 xl:mb-16"
+        >
+          <FlightCards 
+            tripType={tripType} 
+            selectedFrom={selectedFrom}
+            selectedTo={selectedTo}
+            departureDate={departureDate}
+            returnDate={returnDate}
+            hasSearched={hasSearched}
+          />
+        </div>
       </div>
     </div>
   );
