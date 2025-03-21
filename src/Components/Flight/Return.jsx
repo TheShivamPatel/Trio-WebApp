@@ -4,10 +4,29 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import { FaChevronDown } from "react-icons/fa";
 
-const Return = () => {
-  const [startDate, setStartDate] = useState(new Date());
+const Return = ({ setReturnDate }) => {
+  // Set default return date to tomorrow
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  
+  const [startDate, setStartDate] = useState(tomorrow);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  // Initialize return date on component mount
+  useEffect(() => {
+    if (setReturnDate) {
+      setReturnDate(startDate);
+    }
+  }, []);
+
+  const handleDateChange = (date) => {
+    setStartDate(date);
+    if (setReturnDate) {
+      setReturnDate(date);
+    }
+    setIsOpen(false);
+  };
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -43,10 +62,8 @@ const Return = () => {
           <div className="absolute mt-2 z-10 bg-white p-4 shadow-lg rounded-lg">
             <DatePicker
               selected={startDate}
-              onChange={(date) => {
-                setStartDate(date);
-                setIsOpen(false);
-              }}
+              onChange={handleDateChange}
+              minDate={new Date()}
               inline
             />
           </div>

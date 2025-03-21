@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Location from "./Location";
 import CheckIn from "./CheckIn";
 import CheckOut from "./CheckOut";
@@ -9,12 +9,24 @@ import HotelCard from "./HotelCard";
 import AboveSelector from "./AboveSelecote";
 
 function Hotel() {
+
+  // Create a ref for the HotelCard section
+  const hotelCardsRef = useRef(null);
+
+  // Function to scroll to the hotel cards section
+  const scrollToCards = () => {
+    hotelCardsRef.current.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
+
   return (
     <div className="h-auto w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
       {/* Hotel Search Form */}
-      <div className="bg-white  h-auto py-6 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 w-full mt-[-24.5em] md:mt-[-20em] lg:mt-[-22em] xl:mt-[-25em] 2xl:mt-[-27em] z-[-4] pt-15 rounded-3xl shadow-lg">
+      <div className="bg-white h-auto py-6 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 w-full mt-[-24.5em] md:mt-[-20em] lg:mt-[-22em] xl:mt-[-25em] 2xl:mt-[-27em] z-[-4] pt-15 rounded-3xl shadow-lg">
         <div className="font-semibold">
-        <AboveSelector/>
+          <AboveSelector />
         </div>
         <div className="py-4 flex flex-col sm:flex-row flex-wrap gap-4">
           <div className="flex-1 min-w-[200px]">
@@ -32,7 +44,7 @@ function Hotel() {
         </div>
 
         <div className="flex h-1 justify-center mt-4">
-          <SearchBtn />
+          <SearchBtn onSearch={scrollToCards} />
         </div>
       </div>
 
@@ -41,8 +53,11 @@ function Hotel() {
         <EEE />
       </div>
 
-      {/* Hotel Cards Section */}
-      <div className="mt-5 mb-10 sm:mb-15 md:mb-20 lg:mb-25 xl:mb-30 2xl:mb-35">
+      {/* Hotel Cards Section - Added ref here */}
+      <div 
+        ref={hotelCardsRef} 
+        className="mt-5 mb-10 sm:mb-15 md:mb-20 lg:mb-25 xl:mb-30 2xl:mb-35"
+      >
         <HotelCard />
       </div>
     </div>
@@ -50,3 +65,6 @@ function Hotel() {
 }
 
 export default Hotel;
+
+
+

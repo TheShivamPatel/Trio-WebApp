@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 
 
-function AboveSelector() {
+const AboveSelector = () => {
   const [tripType, setTripType] = useState("4rooms");
   return (
-    <div>
-      <div className="flex space-x-5 text-sm mb-2 px-10 mt-2">
+    <div className="w-full">
+      <div className="flex flex-wrap gap-4 text-sm mb-2 mt-2">
         {[
           { label: "Upto 4 Rooms", value: "4rooms" },
           { label: "Group Deals", value: "GroupDeals" },
-        
         ].map((option) => (
           <label key={option.value} className="flex items-center space-x-2">
             <input
@@ -25,6 +24,6 @@ function AboveSelector() {
       </div>
     </div>
   );
-}
+};
 
 export default AboveSelector;

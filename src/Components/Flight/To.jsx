@@ -13,11 +13,18 @@ const airports = {
   ],
 };
 
-const To = ({ selectedFrom }) => {
+const To = ({ selectedFrom, setSelectedTo }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedAirport, setSelectedAirport] = useState(airports.recent[0]);
   const dropdownRef = useRef(null);
+
+  // Initialize selectedTo with the default airport on component mount
+  useEffect(() => {
+    if (setSelectedTo) {
+      setSelectedTo(selectedAirport);
+    }
+  }, []);
 
   // Update selectedAirport if it's the same as selectedFrom
   useEffect(() => {
@@ -28,6 +35,9 @@ const To = ({ selectedFrom }) => {
       
       if (differentAirport) {
         setSelectedAirport(differentAirport);
+        if (setSelectedTo) {
+          setSelectedTo(differentAirport);
+        }
       }
     }
   }, [selectedFrom, selectedAirport]);
@@ -44,6 +54,14 @@ const To = ({ selectedFrom }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleSelect = (airport) => {
+    setSelectedAirport(airport);
+    if (setSelectedTo) {
+      setSelectedTo(airport);
+    }
+    setIsOpen(false);
+  };
 
   const filteredAirports = (category) =>
     airports[category]
@@ -88,10 +106,7 @@ const To = ({ selectedFrom }) => {
                 <div
                   key={airport.code}
                   className="flex justify-between p-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => {
-                    setSelectedAirport(airport);
-                    setIsOpen(false);
-                  }}
+                  onClick={() => handleSelect(airport)}
                 >
                   <div className="flex items-center gap-2">
                     <FaPlane className="text-gray-400 text-sm" />
@@ -114,10 +129,7 @@ const To = ({ selectedFrom }) => {
                 <div
                   key={airport.code}
                   className="flex justify-between p-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => {
-                    setSelectedAirport(airport);
-                    setIsOpen(false);
-                  }}
+                  onClick={() => handleSelect(airport)}
                 >
                   <div className="flex items-center gap-2">
                     <FaPlane className="text-gray-400 text-sm" />
