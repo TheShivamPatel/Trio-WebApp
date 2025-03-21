@@ -1,7 +1,21 @@
 import { NavLink, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Section2 = ({ serviceData }) => {
   const location = useLocation(); // Get the current route
+  const [initialRender, setInitialRender] = useState(true);
+  
+  // Check if we're on the home page
+  const isHomePage = location.pathname === "/" || location.pathname === "";
+  
+  // When component mounts or location changes
+  useEffect(() => {
+    // If we've navigated away from home and back, or to another route
+    // we no longer need the initial state
+    if (initialRender && !isHomePage) {
+      setInitialRender(false);
+    }
+  }, [location.pathname, isHomePage, initialRender]);
 
   return location.pathname !== "/Packages" ? ( // Render only on the home page
     <div className="static h-[80px] sm:h-[90px] md:h-[100px] w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[70%] 2xl:w-[65%] mx-auto">
@@ -19,11 +33,15 @@ const Section2 = ({ serviceData }) => {
               <NavLink
                 key={index}
                 to={elem.link}
-                className={({ isActive }) =>
-                  `flex-shrink-0 flex-grow min-w-[60px] xs:min-w-[65px] sm:min-w-[70px] ${
-                    isActive ? "text-blue-500" : "text-gray-700"
-                  }`
-                }
+                className={({ isActive }) => {
+                  // If we're on the home page and it's the initial render, make "Flights" active
+                  const shouldBeActive = 
+                    (isActive) || 
+                    (initialRender && isHomePage && elem.link === "flights");
+                  
+                  return `flex-shrink-0 flex-grow min-w-[60px] xs:min-w-[65px] sm:min-w-[70px] 
+                         ${shouldBeActive ? "text-blue-500" : "text-gray-700"}`;
+                }}
               >
                 <div className="h-full w-full flex flex-col items-center justify-center p-1 sm:p-2">
                   <img 
